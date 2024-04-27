@@ -1,0 +1,36 @@
+{
+	"manifest_version": 3,
+	"name": "Phishy",
+	"description": "Phishing detector powered by Gemini",
+	"version": "1.0",
+	"action": {
+		"default_popup": "popup/popup.html",
+		"default_icon": {
+			"16": "images/icon-16.png",
+			"32": "images/icon-32.png",
+			"48": "images/icon-48.png",
+			"128": "images/icon-128.png"
+		}
+	},
+	"icons": {
+		"16": "images/icon-16.png",
+		"32": "images/icon-32.png",
+		"48": "images/icon-48.png",
+		"128": "images/icon-128.png"
+	},
+	"host_permissions": ["http://127.0.0.1:8080/", "http://localhost:8080/"],
+	"permissions": ["activeTab", "storage", "scripting"],
+	"background": {
+		"service_worker": "scripts/service-worker.js"
+	},
+	"content_scripts": [
+		{
+			"css": ["scripts/content.css"],
+			"js": ["scripts/content-script.js"],
+			"matches": ["*://*/*"]
+		}
+	],
+	"web_accessible_resources": [
+		{ "resources": ["images/*"], "matches": ["*://*/*"] }
+	]
+}

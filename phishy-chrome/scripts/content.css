@@ -1,0 +1,26 @@
+.suspicious-link-container {
+	display: inline-block;
+}
+
+.suspicious-link-icon:hover {
+	width: 28px;
+	height: 28px;
+}
+
+.suspicious-link-icon {
+	width: 24px;
+	height: 24px;
+	margin-left: 5px; /* Add a gap between link text and image */
+}
+
+.suspicious-link-popup {
+	display: none;
+	position: absolute;
+	background-color: #f0f0f0;
+	border: 1px solid #ccc;
+	padding: 10px;
+	font-size: 14px;
+	max-width: 500px; /* Adjust max width as needed */
+	max-height: 400px; /* Adjust max height as needed */
+	overflow-y: auto; /* Enable vertical scrollbar */
+}
