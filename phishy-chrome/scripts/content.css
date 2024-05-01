@@ -1,5 +1,7 @@
 .suspicious-link-container {
 	display: inline-block;
+	position: relative;
+	font-family: Arial, sans-serif;
 }
 
 .suspicious-link-icon:hover {
@@ -16,11 +18,37 @@
 .suspicious-link-popup {
 	display: none;
 	position: absolute;
-	background-color: #f0f0f0;
-	border: 1px solid #ccc;
-	padding: 10px;
+	flex-direction: column;
+	gap: 8px;
+	justify-content: center;
+	align-items: center;
+	background: #fffefb;
+	border: 1px solid #0000001a;
+	border-radius: 12px;
+	box-shadow: 0px 4px 4px 0px #00000040;
+	padding: 12px 24px;
+	color: #000000;
 	font-size: 14px;
-	max-width: 500px; /* Adjust max width as needed */
-	max-height: 400px; /* Adjust max height as needed */
-	overflow-y: auto; /* Enable vertical scrollbar */
+	width: 500px;
+	z-index: 2147483647;
+}
+
+.suspicious-link-popup-header {
+	width: 100%;
+	text-align: left;
+}
+
+.suspicious-link-popup-content {
+	text-align: justify;
+}
+
+.suspicious-link-popup-button {
+	background: #01266ebf;
+	color: #ffffff;
+	padding: 4px 10px;
+	border: 0px;
+	border-radius: 6px;
+	font-size: 12px;
+	line-height: 18px;
+	text-align: center;
 }

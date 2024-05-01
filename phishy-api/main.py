@@ -161,7 +161,9 @@ def chats():
 
                     # Get chat id related to user id, else create new
                     url_id = found_url["_id"]
-                    found_chat = chats_col.find_one({"url_id": url_id})
+                    found_chat = chats_col.find_one(
+                        {"url_id": url_id, "user_id": user_id}
+                    )
 
                     if not found_chat:
                         chat_doc = {

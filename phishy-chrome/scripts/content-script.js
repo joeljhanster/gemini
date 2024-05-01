@@ -18,58 +18,70 @@
 	}
 
 	// Function to create the hover popup element
-	function createPopupElement(icon, response) {
+	function createPopupElement(phishyUrl) {
 		const popup = document.createElement('div');
 		popup.classList.add('suspicious-link-popup');
 
-		const iconRect = icon.getBoundingClientRect();
-		popup.style.top = `${iconRect.top + icon.offsetHeight}px`;
-		popup.style.left = `${iconRect.left + icon.offsetWidth}px`;
+		// Customize hover content
+		popup.innerHTML =
+			`<h5 class='suspicious-link-popup-header'>${phishyUrl.header}</h5>` +
+			`<p class='suspicious-link-popup-content'>${phishyUrl.body}</p>` +
+			`<button class='suspicious-link-popup-button' data-action='openChat-${phishyUrl.id}'>Investigate this phish</button>`;
 
-		popup.innerHTML = `<h3>${response.header}</h3><p>${response.body}</p>`; // Customize content
+		document.addEventListener('click', function (event) {
+			if (
+				event.target &&
+				event.target.matches(`button[data-action='openChat-${phishyUrl.id}']`)
+			) {
+				console.log(`Opening chat: ${phishyUrl.id}`);
+				chrome.runtime.sendMessage({ type: 'openChat', chatId: phishyUrl.id });
+			}
+		});
+
 		return popup;
 	}
 
 	// Function to show/hide popup on hover
 	function showPopupOnHover(icon, popup) {
 		icon.addEventListener('mouseover', () => {
-			popup.style.display = 'block';
+			popup.style.display = 'flex';
 		});
 	}
 
 	// Function to send message to background script
-	async function sendMessage(link) {
-		const response = await chrome.runtime.sendMessage({
-			type: 'checkLink',
-			url: link.href,
+	async function sendMessage(links, urls) {
+		const data = await chrome.runtime.sendMessage({
+			type: 'checkLinks',
+			urls,
 		});
 
-		if (response.isSuspicious) {
-			const image = new Image();
-			image.src = phishyIcon;
-			image.classList.add('suspicious-link-icon');
+		links.forEach((link) => {
+			data.items.forEach((phishyUrl) => {
+				if (link.href === phishyUrl.url) {
+					const image = new Image();
+					image.src = phishyIcon;
+					image.classList.add('suspicious-link-icon');
 
-			const container = createLinkContainer(link.cloneNode(true), image);
-			link.parentNode.replaceChild(container, link);
+					const container = createLinkContainer(link.cloneNode(true), image);
+					link.parentNode.replaceChild(container, link);
 
-			const popup = createPopupElement(image, response);
-			document.body.appendChild(popup); // Append popup to body
+					const popup = createPopupElement(phishyUrl);
+					container.appendChild(popup);
 
-			showPopupOnHover(image, popup); // Add hover listeners
+					showPopupOnHover(image, popup); // Add hover listeners
 
-			addInlineStyle(container, {
-				background: '#FACBCB',
-				padding: '0px 8px',
-				borderRadius: '6px',
+					addInlineStyle(container, {
+						background: '#FACBCB',
+						padding: '0px 8px',
+						borderRadius: '6px',
+					});
+				}
 			});
-		}
+		});
 	}
 
 	// Find all anchor tags (<a>) on the page
 	const links = document.querySelectorAll('a');
-
-	// Loop through each link and send message to background script
-	links.forEach((link) => {
-		sendMessage(link);
-	});
+	const urls = Array.from(links).map((link) => link.href);
+	sendMessage(links, urls);
 })();
