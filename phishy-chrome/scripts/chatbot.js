@@ -1,9 +1,21 @@
 (async () => {
 	const phishyIcon = chrome.runtime.getURL('images/icon-32.png');
+	const closeIcon = chrome.runtime.getURL('images/close.png');
+
 	function createChatbotContainer() {
 		const container = document.createElement('div');
 		container.setAttribute('id', 'chatbot-container');
 		container.classList.add('chatbot-container');
+
+		const image = new Image();
+		image.src = closeIcon;
+		image.classList.add('close-icon');
+		image.onclick = function () {
+			container.style.display = 'none';
+		};
+
+		container.appendChild(image);
+
 		return container;
 	}
 

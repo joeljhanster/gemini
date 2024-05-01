@@ -1,5 +1,6 @@
 (async () => {
 	const phishyIcon = chrome.runtime.getURL('images/icon-32.png');
+	const closeIcon = chrome.runtime.getURL('images/close.png');
 
 	// Function to create a container element for link and image
 	function createLinkContainer(link, image) {
@@ -23,18 +24,30 @@
 		popup.classList.add('suspicious-link-popup');
 
 		// Customize hover content
-		popup.innerHTML =
+		popup.innerHTML +=
+			`<img class='suspicious-close-icon' src=${closeIcon} data-action='closePopup-${phishyUrl.id}' />` +
 			`<h5 class='suspicious-link-popup-header'>${phishyUrl.header}</h5>` +
 			`<p class='suspicious-link-popup-content'>${phishyUrl.body}</p>` +
 			`<button class='suspicious-link-popup-button' data-action='openChat-${phishyUrl.id}'>Chat to know more</button>`;
 
-		document.addEventListener('click', function (event) {
-			if (
-				event.target &&
-				event.target.matches(`button[data-action='openChat-${phishyUrl.id}']`)
-			) {
-				console.log(`Opening chat: ${phishyUrl.id}`);
-				chrome.runtime.sendMessage({ type: 'openChat', chatId: phishyUrl.id });
+		popup.addEventListener('click', function (event) {
+			console.log(event.target);
+
+			if (event.target) {
+				if (
+					event.target.matches(`button[data-action='openChat-${phishyUrl.id}']`)
+				) {
+					console.log(`Opening chat: ${phishyUrl.id}`);
+					chrome.runtime.sendMessage({
+						type: 'openChat',
+						chatId: phishyUrl.id,
+					});
+					popup.style.display = 'none';
+				} else if (
+					event.target.matches(`img[data-action='closePopup-${phishyUrl.id}']`)
+				) {
+					popup.style.display = 'none';
+				}
 			}
 		});
 

@@ -15,6 +15,18 @@
 	margin-left: 5px; /* Add a gap between link text and image */
 }
 
+.suspicious-close-icon {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 16px;
+	height: 16px;
+}
+
+.suspicious-close-icon:hover {
+	cursor: pointer;
+}
+
 .suspicious-link-popup {
 	display: none;
 	position: absolute;
