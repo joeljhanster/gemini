@@ -26,7 +26,7 @@
 		popup.innerHTML =
 			`<h5 class='suspicious-link-popup-header'>${phishyUrl.header}</h5>` +
 			`<p class='suspicious-link-popup-content'>${phishyUrl.body}</p>` +
-			`<button class='suspicious-link-popup-button' data-action='openChat-${phishyUrl.id}'>Investigate this phish</button>`;
+			`<button class='suspicious-link-popup-button' data-action='openChat-${phishyUrl.id}'>Chat to know more</button>`;
 
 		document.addEventListener('click', function (event) {
 			if (

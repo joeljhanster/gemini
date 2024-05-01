@@ -59,10 +59,22 @@
 		button.innerHTML = 'Send';
 		inputDiv.appendChild(button);
 
+		const footerText = document.createElement('span');
+		footerText.classList.add('chatbot-footer-text');
+		footerText.innerHTML = 'Powered by Gemini';
+
+		const footer = document.createElement('div');
+		footer.classList.add('chatbot-footer');
+		footer.appendChild(inputDiv);
+		footer.appendChild(footerText);
+
 		body.appendChild(context);
-		body.appendChild(inputDiv);
+		body.appendChild(footer);
 
 		input.addEventListener('keyup', (event) => {
+			if (event.key === 'Enter' || event.keyCode === 13) {
+				button.click();
+			}
 			if (event.target && event.target.value != '') {
 				button.style.color = 'black';
 				button.disabled = false;
