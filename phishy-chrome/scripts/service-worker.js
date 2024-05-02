@@ -122,10 +122,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 			const catches = response.catches;
 			const message =
 				catches > 0
-					? `There ${
-							catches === 1 ? 'is' : 'are'
-					  } ${catches} suspicious catches!`
-					: 'No suspicious catches found! Continue surfing with ease, mate!';
+					? catches === 1
+						? `There is ${catches} suspicious link caught`
+						: `There are ${catches} suspicious links caught`
+					: 'No suspicious links caught! Continue surfing with ease, mate!';
 
 			// Trigger notification
 			chrome.notifications.create(
