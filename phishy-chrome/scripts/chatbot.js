@@ -2,6 +2,37 @@
 	const phishyIcon = chrome.runtime.getURL('images/icon-32.png');
 	const closeIcon = chrome.runtime.getURL('images/close.png');
 
+	async function sendMessage(chatId, message) {
+		console.log(`${message} sent for ${chatId}`);
+		const history = document.getElementById('chatbot-user-history');
+		history.innerHTML += generateHistoryHTML({
+			role: 'user',
+			parts: [message],
+		});
+		history.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+		const chat = await chrome.runtime.sendMessage({
+			type: 'sendMessage',
+			chatId,
+			message,
+		});
+
+		const lastChat = chat.userHistory.pop();
+		history.innerHTML += generateHistoryHTML(lastChat);
+		history.scrollIntoView({ behavior: 'smooth', block: 'end' });
+	}
+
+	function generateHistoryHTML(convo) {
+		return (
+			`<div class='chat'>` +
+			`<span class='chat-role'>${
+				convo.role === 'user' ? 'You' : 'Phisherman'
+			}</span>` +
+			`<span class='chat-message'>${convo.parts[0]}</span>` +
+			'</div>'
+		);
+	}
+
 	function createChatbotContainer() {
 		const container = document.createElement('div');
 		container.setAttribute('id', 'chatbot-container');
@@ -99,26 +130,6 @@
 		return body;
 	}
 
-	async function sendMessage(chatId, message) {
-		console.log(`${message} sent for ${chatId}`);
-		const history = document.getElementById('chatbot-user-history');
-		history.innerHTML += generateHistoryHTML({
-			role: 'user',
-			parts: [message],
-		});
-		history.scrollIntoView({ behavior: 'smooth', block: 'end' });
-
-		const chat = await chrome.runtime.sendMessage({
-			type: 'sendMessage',
-			chatId,
-			message,
-		});
-
-		const lastChat = chat.userHistory.pop();
-		history.innerHTML += generateHistoryHTML(lastChat);
-		history.scrollIntoView({ behavior: 'smooth', block: 'end' });
-	}
-
 	const container = createChatbotContainer();
 	const header = createChatbotHeader();
 	const body = createChatbotBody();
@@ -127,17 +138,6 @@
 	container.appendChild(body);
 
 	document.body.appendChild(container);
-
-	function generateHistoryHTML(convo) {
-		return (
-			`<div class='chat'>` +
-			`<span class='chat-role'>${
-				convo.role === 'user' ? 'You' : 'Phisherman'
-			}</span>` +
-			`<span class='chat-message'>${convo.parts[0]}</span>` +
-			'</div>'
-		);
-	}
 
 	chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		if (request.type === 'loadChat') {
