@@ -31,7 +31,7 @@
 		return (
 			`<div class='chat'>` +
 			`<span class='chat-role'>${
-				convo.role === 'user' ? 'You' : 'Phishy-man'
+				convo.role === 'user' ? 'You' : 'Phishy'
 			}</span>` +
 			`<span class='chat-message'>${parseBody(convo.parts[0])}</span>` +
 			'</div>'
