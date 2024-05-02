@@ -31,8 +31,6 @@
 			`<button class='suspicious-link-popup-button' data-action='openChat-${phishyUrl.id}'>Chat to know more</button>`;
 
 		popup.addEventListener('click', function (event) {
-			console.log(event.target);
-
 			if (event.target) {
 				if (
 					event.target.matches(`button[data-action='openChat-${phishyUrl.id}']`)
@@ -76,7 +74,11 @@
 					image.classList.add('suspicious-link-icon');
 
 					const container = createLinkContainer(link.cloneNode(true), image);
-					link.parentNode.replaceChild(container, link);
+					try {
+						link.parentNode.replaceChild(container, link);
+					} catch (e) {
+						console.error('Failed to find link');
+					}
 
 					const popup = createPopupElement(phishyUrl);
 					container.appendChild(popup);

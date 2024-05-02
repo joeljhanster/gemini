@@ -26,7 +26,7 @@
 		return (
 			`<div class='chat'>` +
 			`<span class='chat-role'>${
-				convo.role === 'user' ? 'You' : 'Phisherman'
+				convo.role === 'user' ? 'You' : 'Phishy-man'
 			}</span>` +
 			`<span class='chat-message'>${convo.parts[0]}</span>` +
 			'</div>'
@@ -143,7 +143,6 @@
 		if (request.type === 'loadChat') {
 			const chat = request.chat;
 			console.log(`chatbot opening chat: ${chat.id}`);
-			console.log(chat);
 
 			const container = document.getElementById('chatbot-container');
 			container.style.display = 'flex';

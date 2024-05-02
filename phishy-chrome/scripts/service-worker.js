@@ -13,7 +13,6 @@ function getRandomToken() {
 async function setUserId() {
 	const userId = getRandomToken();
 	await chrome.storage.sync.set({ userId });
-	console.log(`UserId set: ${userId}`);
 }
 
 async function getUserId() {
@@ -22,7 +21,6 @@ async function getUserId() {
 
 async function checkPhishyUrls(urls) {
 	const { userId } = await getUserId();
-	console.log(`UserId get: ${userId}`);
 	const response = await fetch(`${API_URL}/api/v1/chats`, {
 		method: 'POST',
 		body: JSON.stringify({ userId, type: 'URL', urls }),
@@ -32,10 +30,7 @@ async function checkPhishyUrls(urls) {
 		},
 	});
 
-	const data = await response.json();
-	console.log(data);
-
-	return data;
+	return response.json();
 }
 
 async function getChatDetails(chatId) {
@@ -46,10 +41,7 @@ async function getChatDetails(chatId) {
 		},
 	});
 
-	const data = await response.json();
-	console.log(data);
-
-	return data;
+	return response.json();
 }
 
 async function sendChatMessage(chatId, message) {
@@ -62,10 +54,7 @@ async function sendChatMessage(chatId, message) {
 		},
 	});
 
-	const data = await response.json();
-	console.log(data);
-
-	return data;
+	return response.json();
 }
 
 chrome.runtime.onInstalled.addListener(async () => {
@@ -102,6 +91,21 @@ chrome.action.onClicked.addListener(async (tab) => {
 	}
 });
 
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+	const currState = await chrome.action.getBadgeText({ tabId });
+
+	if (changeInfo.status === 'complete' && currState === 'ON') {
+		chrome.scripting.executeScript({
+			target: { tabId },
+			files: ['scripts/content-script.js', 'scripts/chatbot.js'],
+		});
+		chrome.scripting.insertCSS({
+			target: { tabId },
+			files: ['scripts/content.css', 'scripts/chatbot.css'],
+		});
+	}
+});
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	(async () => {
 		console.log(
@@ -112,15 +116,37 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 		if (request.type === 'checkLinks') {
 			const urls = request.urls;
-			console.log(urls);
 			const response = await checkPhishyUrls(urls);
+
+			const phishyIcon = chrome.runtime.getURL('images/icon-128.png');
+			const catches = response.catches;
+			const message =
+				catches > 0
+					? `There ${
+							catches === 1 ? 'is' : 'are'
+					  } ${catches} suspicious catches!`
+					: 'No suspicious catches found! Continue surfing with ease, mate!';
+
+			// Trigger notification
+			chrome.notifications.create(
+				`check-phishy-urls-${sender.tab.url}`,
+				{
+					type: 'basic',
+					iconUrl: phishyIcon,
+					title: 'Phishy has casted its net!',
+					message,
+					priority: 1,
+				},
+				function () {
+					console.log('Notification created');
+				},
+			);
 
 			sendResponse(response);
 		}
 
 		if (request.type === 'openChat') {
 			const chatId = request.chatId;
-			console.log(chatId);
 			const chat = await getChatDetails(chatId);
 			await chrome.tabs.sendMessage(sender.tab.id, { type: 'loadChat', chat });
 		}

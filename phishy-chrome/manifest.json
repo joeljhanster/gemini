@@ -2,7 +2,7 @@
 	"manifest_version": 3,
 	"name": "Phishy",
 	"description": "Phishing detector powered by Gemini",
-	"version": "1.0",
+	"version": "1.0.0",
 	"action": {
 		"default_icon": {
 			"16": "images/icon-16.png",
@@ -18,7 +18,7 @@
 		"128": "images/icon-128.png"
 	},
 	"host_permissions": ["http://127.0.0.1:8080/", "http://localhost:8080/"],
-	"permissions": ["activeTab", "storage", "scripting"],
+	"permissions": ["activeTab", "notifications", "storage", "scripting"],
 	"background": {
 		"service_worker": "scripts/service-worker.js"
 	},
