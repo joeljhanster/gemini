@@ -1,5 +1,5 @@
 (async () => {
-	const phishyIcon = chrome.runtime.getURL('images/icon-32.png');
+	const phishyIcon = chrome.runtime.getURL('images/icon-128.png');
 	const closeIcon = chrome.runtime.getURL('images/close.png');
 
 	async function sendMessage(chatId, message) {
@@ -22,13 +22,18 @@
 		history.scrollIntoView({ behavior: 'smooth', block: 'end' });
 	}
 
+	function parseBody(body) {
+		let parsedText = body.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+		return parsedText.replace(/\n/g, '<br />');
+	}
+
 	function generateHistoryHTML(convo) {
 		return (
 			`<div class='chat'>` +
 			`<span class='chat-role'>${
 				convo.role === 'user' ? 'You' : 'Phishy-man'
 			}</span>` +
-			`<span class='chat-message'>${convo.parts[0]}</span>` +
+			`<span class='chat-message'>${parseBody(convo.parts[0])}</span>` +
 			'</div>'
 		);
 	}
@@ -158,7 +163,7 @@
 			title.innerHTML = 'Suspicious URL';
 			subtitle.innerHTML = chat.url;
 			header.innerHTML = chat.header;
-			body.innerHTML = chat.body;
+			body.innerHTML = parseBody(chat.body);
 			const historyHTML = chat.userHistory
 				.map((convo) => generateHistoryHTML(convo))
 				.join('');

@@ -1,5 +1,5 @@
 (async () => {
-	const phishyIcon = chrome.runtime.getURL('images/icon-32.png');
+	const phishyIcon = chrome.runtime.getURL('images/icon-48.png');
 	const closeIcon = chrome.runtime.getURL('images/close.png');
 
 	// Function to create a container element for link and image
@@ -18,6 +18,11 @@
 		}
 	}
 
+	function parseBody(body) {
+		let parsedText = body.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+		return parsedText.replace(/\n/g, '<br />');
+	}
+
 	// Function to create the hover popup element
 	function createPopupElement(phishyUrl) {
 		const popup = document.createElement('div');
@@ -26,8 +31,8 @@
 		// Customize hover content
 		popup.innerHTML +=
 			`<img class='suspicious-close-icon' src=${closeIcon} data-action='closePopup-${phishyUrl.id}' />` +
-			`<h5 class='suspicious-link-popup-header'>${phishyUrl.header}</h5>` +
-			`<p class='suspicious-link-popup-content'>${phishyUrl.body}</p>` +
+			`<h3 class='suspicious-link-popup-header'>${phishyUrl.header}</h3>` +
+			`<p class='suspicious-link-popup-content'>${parseBody(phishyUrl.body)}</p>` +
 			`<button class='suspicious-link-popup-button' data-action='openChat-${phishyUrl.id}'>Chat to know more</button>`;
 
 		popup.addEventListener('click', function (event) {
