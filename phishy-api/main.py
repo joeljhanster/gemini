@@ -4,7 +4,14 @@ import json
 import google.generativeai as genai
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
-from flask import Flask, request, jsonify, Response
+from flask import (
+    Flask,
+    Response,
+    request,
+    jsonify,
+    render_template,
+    send_from_directory,
+)
 from flask_cors import CORS
 from urllib.parse import urlparse
 from pymongo import ReturnDocument
@@ -98,6 +105,17 @@ def get_domain_url(url):
 
 
 ### API ROUTES ###
+@app.route("/privacy-policy")
+def privacy_policy():
+    """Renders the privacy policy page."""
+    return render_template("privacy-policy.html")
+
+
+@app.route("/favicon.ico")
+def fav():
+    return send_from_directory(app.static_folder, "favicon.ico")
+
+
 @app.route("/api/v1/chats", methods=["POST"])
 def chats():
     if request.method == "POST":

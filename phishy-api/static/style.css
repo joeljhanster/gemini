@@ -1,0 +1,41 @@
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 20px;
+}
+
+header {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+h1 {
+	font-size: 2em;
+	margin-bottom: 0.5em;
+}
+
+main {
+	max-width: 700px;
+	margin: 0 auto;
+}
+
+p {
+	line-height: 1.5;
+	margin-bottom: 1em;
+}
+
+ul {
+	list-style: disc;
+	padding-left: 20px;
+	margin-bottom: 1em;
+}
+
+li strong {
+	font-weight: bold;
+}
+
+footer {
+	text-align: center;
+	font-size: 0.8em;
+	margin-top: 20px;
+}

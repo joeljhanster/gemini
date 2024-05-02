@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Phishy Privacy Policy</title>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="{{ url_for('static',filename='style.css') }}"
+		/>
+		<link
+			rel="shortcut icon"
+			href="{{ url_for('static', filename='favicon.ico') }}"
+		/>
+	</head>
+	<body>
+		<header>
+			<h1>Phishy Privacy Policy</h1>
+		</header>
+
+		<main>
+			<p>
+				This privacy policy describes how Phishy, a Chrome extension developed
+				by MrHanTheMan ("we" or "us"), collects, uses, and stores your
+				information when you use our extension.
+			</p>
+
+			<h2>Information We Collect</h2>
+
+			<p>
+				Phishy collects the following information from your browsing activity:
+			</p>
+
+			<ul>
+				<li><strong>URLs:</strong></li>
+				<p>
+					When you visit a webpage, Phishy analyzes the URLs of links present on
+					that page. We do not collect the content of the webpages themselves.
+				</p>
+			</ul>
+
+			<h2>Use of Information</h2>
+
+			<p>We use the collected URLs for the following purposes:</p>
+
+			<ul>
+				<li><strong>Phishing Detection:</strong></li>
+				<p>
+					We send the URLs to our secure API powered by Gemini, an AI model
+					trained to detect phishing attempts. Gemini analyzes the
+					characteristics of the URLs to determine if they are suspicious. We do
+					not use the URLs for any other purpose besides phishing detection.
+				</p>
+				<li><strong>Analysis and Improvement (Optional):</strong></li>
+				<p>
+					We may use anonymized data (without any user identification) to
+					analyze phishing trends and improve the accuracy of our detection
+					system. This helps us better protect users from future phishing
+					attempts.
+				</p>
+			</ul>
+
+			<h2>Data Storage</h2>
+
+			<p>
+				We take the security and privacy of your information seriously. Here's
+				how we store the collected data:
+			</p>
+
+			<ul>
+				<li><strong>URLs:</strong></li>
+				<p>
+					The URLs you visit are temporarily stored while being analyzed by
+					Gemini. We do not store them long-term and they are not associated
+					with any user identifier.
+				</p>
+				<li><strong>API Response:</strong></li>
+				<p>
+					The response received from Gemini regarding the suspiciousness of a
+					URL might be stored for a limited period for analysis purposes. This
+					data is anonymized and does not contain any user identification.
+				</p>
+			</ul>
+
+			<h2>User Control</h2>
+
+			<p>
+				Currently, Phishy does not offer options for users to directly manage
+				the data collected. However, you can always uninstall the extension if
+				you are uncomfortable with the data collection practices.
+			</p>
+
+			<h2>Security</h2>
+
+			<p>
+				We take reasonable steps to protect the information we collect from
+				loss, misuse, and unauthorized access, disclosure, alteration, or
+				destruction. We use HTTPS to encrypt communication between your browser
+				and our API.
+			</p>
+
+			<h2>Contact Us</h2>
+
+			<p>
+				If you have any questions about this Privacy Policy, please contact us
+				at gemini.phishy@gmail.com.
+			</p>
+		</main>
+
+		<footer>
+			<p><strong>Effective Date:</strong> 2024-05-03</p>
+		</footer>
+	</body>
+</html>
