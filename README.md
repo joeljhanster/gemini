@@ -1,4 +1,4 @@
-# Phishy: Your AI Companion for a Secure Web
+# Phishy: Your AI Companion against Online Scams
 
 **Empowering users to navigate the web with confidence.**
 
