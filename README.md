@@ -36,7 +36,7 @@ Our journey began with Figma, a design tool that allowed us to craft a user-frie
 
 2. **Seamless Integration: Chrome Extension**
 
-Phishy seamlessly integrates as a Chrome extension, working silently by your side, analyzing links as you explore the web. Once it finishes its initial scan, a discreet notification pop ups, informing you of the number of suspicious links caught. These flagged links are then subtly highlighted on the webpage itself. Hover over them for a helpful tooltip explaining why Phishy deems them suspicious. Still unsure? Our friendly chatbot is just a click away to answer any questions and provide further clarification.
+Phishy seamlessly integrates as a Chrome extension, working silently by your side, analyzing links as you explore the web. Once it finishes its initial scan, a discreet notification pops up, informing you of the number of suspicious links caught. These flagged links are then subtly highlighted on the webpage itself. Hover over them for a helpful tooltip explaining why Phishy deems them suspicious. Still unsure? Our friendly chatbot is just a click away to answer any questions and provide further clarification.
 
 3. **The Power of AI: Google AI wrapped in Flask**
 
